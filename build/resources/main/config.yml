@@ -1,0 +1,7 @@
+mysql:
+  password: ''
+  host: 'localhost'
+  database: 'test'
+  port: 3306
+  user: 'root'
+  table: 'factions_core'

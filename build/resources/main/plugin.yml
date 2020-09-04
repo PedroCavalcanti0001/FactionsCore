@@ -1,8 +1,11 @@
-name: RevolutionBosses
-description: plugin de bosses.
+name: FactionsCore
+description: A simple faction plugin.
 author: zKingOfKill
 version: '1.0'
-main: me.zkingofkill.revolutionbosses.Main
+main: me.zkingofkill.factionscore.Main
 
 commands:
-  bosses:
+  faction:
+    aliases:
+      - f
+      - fac

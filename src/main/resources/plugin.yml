@@ -5,7 +5,7 @@ version: '1.0'
 main: me.zkingofkill.factionscore.Main
 
 commands:
-  factions:
+  faction:
     aliases:
       - f
       - fac
