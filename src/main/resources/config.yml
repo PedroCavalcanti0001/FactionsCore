@@ -5,3 +5,39 @@ mysql:
   port: 3306
   user: 'root'
   table: 'factions_core'
+
+ranks:
+  "0":
+    name: "Membro"
+    permissions:
+      - "BUILD"
+      - "BREAK"
+      - "FLY"
+  "1":
+    name: "Moderador"
+    permissions:
+      - "BUILD"
+      - "BREAK"
+      - "KICK"
+      - "FLY"
+  "2":
+    name: "Co-Leader"
+    permissions:
+      - "BUILD"
+      - "BREAK"
+      - "KICK"
+      - "FLY"
+      - "SET_HOME"
+  "3":
+    name: "Leader"
+    permissions:
+      - "BUILD"
+      - "BREAK"
+      - "KICK"
+      - "FLY"
+      - "SET_HOME"
+      - "DISBAND"
+
+scoreboard:
+  withoutFaction:
+

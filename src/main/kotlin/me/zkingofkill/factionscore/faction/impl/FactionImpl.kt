@@ -7,10 +7,11 @@ import me.zkingofkill.factionscore.faction.Faction
 class FactionImpl(override val id: Int = Main.singleton.factionManager.nextId(),
                   override val owner: String,
                   override val name: String,
-                  override val foundationDate: Long,
+                  override val foundationDate: Long = System.currentTimeMillis(),
                   override val tag: String,
-                  override val power: Int,
-                  override val members: List<FPlayer>) : Faction {
+                  override val power: Int = 10,
+                  override val members: MutableList<FPlayer> = arrayListOf(),
+                  override var deleted: Boolean = false) : Faction() {
 
 
 }

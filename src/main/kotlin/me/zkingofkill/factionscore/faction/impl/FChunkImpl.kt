@@ -8,5 +8,7 @@ import me.zkingofkill.factionscore.faction.Faction
 class FChunkImpl(override val id: Int,
                  override val x: Int,
                  override val z: Int,
-                 override var ownerId: Int) : FChunk() {
+                 override var ownerId: Int,
+                 override val world: String,
+                 override var deleted: Boolean = false) : FChunk() {
 }

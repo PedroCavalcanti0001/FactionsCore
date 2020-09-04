@@ -1,7 +1,7 @@
 package me.zkingofkill.factionscore.manager
 
-import me.zkingofkill.factionscore.Main
 import me.zkingofkill.factionscore.faction.FChunk
+import me.zkingofkill.factionscore.faction.Faction
 import me.zkingofkill.factionscore.faction.impl.FChunkImpl
 import org.bukkit.Chunk
 
@@ -16,6 +16,10 @@ class FChunkManager {
         return chunks.find { it.x == chunk.x && chunk.z == it.z }
     }
 
+    fun getFactionChunks(faction: Faction): List<FChunk> {
+        return chunks.filter { it.ownerId == faction.id }
+    }
+
     fun addFactionChunk(chunk: Chunk, factionId: Int) {
         val factionChunk = getFactionChunk(chunk)
         if (factionChunk != null) {
@@ -25,7 +29,8 @@ class FChunkManager {
                     genNextId(),
                     chunk.x,
                     chunk.z,
-                    factionId)
+                    factionId,
+                    chunk.world.name)
             chunks.add(fchunk)
         }
     }

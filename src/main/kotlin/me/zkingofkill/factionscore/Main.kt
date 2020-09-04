@@ -2,11 +2,12 @@ package me.zkingofkill.factionscore
 
 import me.zkingofkill.factionscore.command.FactionCommand
 import me.zkingofkill.factionscore.database.Mysql
+import me.zkingofkill.factionscore.listener.Listeners
 import me.zkingofkill.factionscore.manager.DatabaseManager
 import me.zkingofkill.factionscore.manager.FChunkManager
 import me.zkingofkill.factionscore.manager.FactionManager
+import me.zkingofkill.factionscore.manager.InviteManager
 import me.zkingofkill.factionscore.tabcompleter.TabCompleter
-import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import utils.ConfigurationFile
 import utils.inventory.InventoryManager
@@ -24,6 +25,7 @@ class Main : JavaPlugin() {
 
     lateinit var factionManager: FactionManager
     lateinit var chunkManager: FChunkManager
+    lateinit var inviteManager: InviteManager
     lateinit var messages:ConfigurationFile
 
     override fun onEnable() {
@@ -46,7 +48,11 @@ class Main : JavaPlugin() {
 
         factionManager = FactionManager()
         chunkManager = FChunkManager()
+        inviteManager = InviteManager()
+
         DatabaseManager().startTasks()
+
+        server.pluginManager.registerEvents(Listeners(), this)
 
         mysql = Mysql()
         mysql.init()

@@ -55,21 +55,27 @@ class Listeners : Listener {
     @EventHandler
     fun onFly(event: PlayerMoveEvent) {
         val player = event.player
-        if(!player.isFlying) return
+        if (!player.isFlying) return
         val chunk = player.location.chunk
         val fChunk = Main.singleton.chunkManager.getFactionChunk(chunk)
         val fPlayer = Main.singleton.factionManager.getFPlayer(player)
-        if(fChunk != null || fPlayer == null) {
-
-            if (fPlayer == null || !fPlayer.fRank.hasPermission(FRankPermission.BUILD)) {
-                player.sendMessage(Main.singleton.messages.getString("withoutPermissionToBuild")
+        val faction = Main.singleton.factionManager.factionByPlayer(player)
+        if (fChunk != null || fPlayer != null) {
+            if (fChunk!!.id == faction!!.id) {
+                if (!fPlayer!!.fRank.hasPermission(FRankPermission.FLY)) {
+                    player.allowFlight = false
+                    player.sendMessage(Main.singleton.messages.getString("flyOnlyInYourFaction")
+                            .replace("&", "§"))
+                    return
+                }
+            } else {
+                player.allowFlight = false
+                player.sendMessage(Main.singleton.messages.getString("flyOnlyInYourFaction")
                         .replace("&", "§"))
-                event.isCancelled = true
-                return
             }
-        }else{
+        } else {
             player.allowFlight = false
-            player.sendMessage(Main.singleton.messages.getString("onlyInYourFaction")
+            player.sendMessage(Main.singleton.messages.getString("flyOnlyInYourFaction")
                     .replace("&", "§"))
         }
     }

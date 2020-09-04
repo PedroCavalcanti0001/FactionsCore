@@ -19,6 +19,7 @@ class ChunkTable {
                     "(`id` INTEGER, " +
                     "`x` INTEGER, " +
                     "`z` INTEGER, " +
+                    "`world` VARCHAR(100), " +
                     "`ownerId` INTEGER, " +
                     "PRIMARY KEY (`id`));"
             val preparedStatement = con?.prepareStatement(query)
@@ -31,7 +32,7 @@ class ChunkTable {
     }
 
 
-    fun deleteChunk(id: Int) {
+    fun delete(id: Int) {
         try {
             val con = Mysql.openCon()
             val query = "DELETE FROM factionscore_chunks WHERE id = $id;"
@@ -60,7 +61,8 @@ class ChunkTable {
             val x = resultSet.getInt("x")
             val z = resultSet.getInt("z")
             val ownerId = resultSet.getInt("ownerId")
-            val fChunk = FChunkImpl(id, x,z,ownerId)
+            val world = resultSet.getString("world")
+            val fChunk = FChunkImpl(id, x,z,ownerId, world)
             results.add(fChunk)
         }
         preparedStatement.close()

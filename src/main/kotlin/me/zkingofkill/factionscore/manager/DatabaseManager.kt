@@ -19,7 +19,10 @@ class DatabaseManager {
 
     private fun saveAllChunks() {
         singleton.chunkManager.chunks.forEach {
-            singleton.mysql.chunkTable.upsert(it)
+            if(it.deleted)
+                singleton.mysql.chunkTable.upsert(it)
+            else
+                singleton.mysql.chunkTable.delete(it.id)
         }
     }
 

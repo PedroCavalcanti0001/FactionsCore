@@ -9,13 +9,22 @@ abstract class Faction {
     abstract val foundationDate:Long
     abstract val tag:String
     abstract val power:Int
-    abstract val members:List<FPlayer>
+    abstract val members:MutableList<FPlayer>
+    abstract var deleted:Boolean
 
     fun getMember(player: Player):FPlayer?{
         return members.find { it.player == player.name }
     }
 
     fun isMember(player: Player):Boolean{
+        return getMember(player) != null
+    }
+
+    fun getMember(player: String):FPlayer?{
+        return members.find { it.player == player }
+    }
+
+    fun isMember(player: String):Boolean{
         return getMember(player) != null
     }
 

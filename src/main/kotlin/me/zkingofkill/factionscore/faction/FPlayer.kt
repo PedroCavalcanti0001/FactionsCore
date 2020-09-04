@@ -1,6 +1,7 @@
 package me.zkingofkill.factionscore.faction
 
-interface FPlayer {
-    val player:String
-    val fRank:FRank
+abstract class FPlayer {
+    abstract val player:String
+    abstract val fRank:FRank
+    abstract fun isInFactionChunk(): Boolean
 }
