@@ -1,12 +1,15 @@
 package me.zkingofkill.factionscore.manager
 
+import fr.minuskube.netherboard.Netherboard
 import me.zkingofkill.factionscore.Main
 import me.zkingofkill.factionscore.faction.FPlayer
 import me.zkingofkill.factionscore.faction.FRank
 import me.zkingofkill.factionscore.faction.FRankPermission
 import me.zkingofkill.factionscore.faction.Faction
 import me.zkingofkill.factionscore.faction.impl.FRankImpl
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+
 
 class FactionManager {
     val factions = arrayListOf<Faction>()
@@ -18,7 +21,7 @@ class FactionManager {
             val name = Main.singleton.config.getString("ranks.$it.name")
             val permissions = Main.singleton.config.getStringList("ranks.$it.permissions")
                     .map { FRankPermission.valueOf(it.toUpperCase()) }
-            ranks.add(FRankImpl(id,name, permissions as ArrayList<FRankPermission>))
+            ranks.add(FRankImpl(id, name, permissions as ArrayList<FRankPermission>))
         }
     }
 
@@ -34,7 +37,7 @@ class FactionManager {
         return factions.find { (it.owner == player.name || it.isMember(player)) && !it.deleted }
     }
 
-    fun factionByTag(tag:String): Faction? {
+    fun factionByTag(tag: String): Faction? {
         return factions.find { it.tag == tag && !it.deleted }
     }
 
@@ -43,10 +46,12 @@ class FactionManager {
     }
 
     fun createFaction(faction: Faction) {
+        faction.getAllMembers().forEach { it.updateScoreBoard() }
         factions.add(faction)
     }
 
     fun removeFaction(faction: Faction) {
+        faction.getAllMembers().forEach { it.updateScoreBoard() }
         faction.deleted = true
     }
 }

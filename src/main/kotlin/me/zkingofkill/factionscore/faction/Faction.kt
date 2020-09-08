@@ -1,5 +1,7 @@
 package me.zkingofkill.factionscore.faction
 
+import me.zkingofkill.factionscore.Main
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 abstract class Faction {
@@ -16,15 +18,24 @@ abstract class Faction {
         return members.find { it.player == player.name }
     }
 
-    fun isMember(player: Player):Boolean{
+    fun isMember(player: Player): Boolean {
         return getMember(player) != null
     }
 
-    fun getMember(player: String):FPlayer?{
+    fun getMember(player: String): FPlayer? {
         return members.find { it.player == player }
     }
 
-    fun isMember(player: String):Boolean{
+    fun getAllMembers(): MutableList<FPlayer> {
+        val list = members
+        val fOwner = Main.singleton.factionManager.getFPlayer(Bukkit.getPlayer(owner))
+        if (fOwner != null) {
+            list.add(fOwner)
+        }
+        return list
+    }
+
+    fun isMember(player: String): Boolean {
         return getMember(player) != null
     }
 

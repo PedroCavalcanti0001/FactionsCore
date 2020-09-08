@@ -39,5 +39,10 @@ ranks:
       - "DISBAND"
 
 scoreboard:
+  withFaction:
+    - "Facção: {currentFaction}"
+    - "Rank: {currentRank}"
   withoutFaction:
+    - " "
+    - "&aNenhuma facção"
 

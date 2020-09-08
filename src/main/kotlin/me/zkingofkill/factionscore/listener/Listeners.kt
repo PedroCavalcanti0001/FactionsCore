@@ -1,14 +1,31 @@
 package me.zkingofkill.factionscore.listener
 
+import fr.minuskube.netherboard.Netherboard
 import me.zkingofkill.factionscore.Main
 import me.zkingofkill.factionscore.faction.FRankPermission
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerMoveEvent
 
+
 class Listeners : Listener {
+
+    @EventHandler
+    fun onPlayerJoin(event: PlayerJoinEvent) {
+        val player = event.player
+        val fPlayer = Main.singleton.factionManager.getFPlayer(player)
+        val board = Netherboard.instance().createBoard(player, "My Scoreboard")
+        if (fPlayer != null) {
+            fPlayer.updateScoreBoard()
+        } else {
+            Main.singleton.config.getStringList("scoreboard.withoutFaction")
+                    .withIndex()
+                    .forEach { (index, it) -> board.set(it,index)}
+        }
+    }
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
